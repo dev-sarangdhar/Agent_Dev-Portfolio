@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Dev - Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <style>
+    :root {
+      --primary: #ff2d75;
+      --secondary: #00f0ff;
+      --dark: #0a0a0a;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+      color: white;
+      font-family: 'Courier New', monospace;
+      overflow-x: hidden;
+    }
+    
+    .cyber-border {
+      position: relative;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 15px var(--primary), inset 0 0 15px var(--primary);
+    }
+    
+    .cyber-border::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 2px solid var(--secondary);
+      box-shadow: 0 0 15px var(--secondary), inset 0 0 15px var(--secondary);
+      z-index: -1;
+      animation: pulse 4s infinite alternate;
+    }
+    
+    .cyber-btn {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: black;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cyber-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 240, 255, 0.4);
+    }
+    
+    .cyber-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .cyber-btn:hover::before {
+      left: 100%;
+    }
+    
+    .matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      opacity: 0.1;
+    }
+    
+    .hacker-text {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .skill-bar {
+      height: 8px;
+      background: #333;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .skill-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      animation: load 1.5s ease-in-out forwards;
+    }
+    
+    .terminal {
+      background: rgba(10, 10, 10, 0.8);
+      border-radius: 5px;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+      font-family: 'Courier New', monospace;
+    }
+    
+    .terminal-header {
+      background: #222;
+      padding: 5px 10px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      display: flex;
+    }
+    
+    .terminal-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    
+    .terminal-body {
+      padding: 15px;
+      height: 200px;
+      overflow-y: auto;
+    }
+    
+    .command {
+      color: var(--secondary);
+    }
+    
+    .typing {
+      border-right: 2px solid var(--secondary);
+      animation: blink 1s step-end infinite;
+    }
+    
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: var(--secondary) }
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    
+    @keyframes load {
+      0% { width: 0; }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .glitch {
+      position: relative;
+    }
+    
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--dark);
+    }
+    
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--primary);
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+    
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 var(--secondary);
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+    
+    @keyframes glitch-anim {
+      0% { clip: rect(31px, 9999px, 94px, 0); }
+      10% { clip: rect(112px, 9999px, 76px, 0); }
+      20% { clip: rect(85px, 9999px, 77px, 0); }
+      30% { clip: rect(27px, 9999px, 97px, 0); }
+      40% { clip: rect(64px, 9999px, 98px, 0); }
+      50% { clip: rect(61px, 9999px, 85px, 0); }
+      60% { clip: rect(99px, 9999px, 114px, 0); }
+      70% { clip: rect(34px, 9999px, 115px, 0); }
+      80% { clip: rect(98px, 9999px, 129px, 0); }
+      90% { clip: rect(43px, 9999px, 96px, 0); }
+      100% { clip: rect(82px, 9999px, 64px, 0); }
+    }
+    
+    @keyframes glitch-anim2 {
+      0% { clip: rect(65px, 9999px, 119px, 0); }
+      10% { clip: rect(79px, 9999px, 66px, 0); }
+      20% { clip: rect(101px, 9999px, 114px, 0); }
+      30% { clip: rect(110px, 9999px, 89px, 0); }
+      40% { clip: rect(85px, 9999px, 91px, 0); }
+      50% { clip: rect(132px, 9999px, 74px, 0); }
+      60% { clip: rect(54px, 9999px, 52px, 0); }
+      70% { clip: rect(142px, 9999px, 63px, 0); }
+      80% { clip: rect(16px, 9999px, 69px, 0); }
+      90% { clip: rect(37px, 9999px, 131px, 0); }
+      100% { clip: rect(143px, 9999px, 134px, 0); }
+    }
+    
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--secondary);
+      border-radius: 50%;
+      animation: particle-anim linear infinite;
+    }
+    
+    @keyframes particle-anim {
+      0% { transform: translateY(0) translateX(0); opacity: 1; }
+      100% { transform: translateY(100vh) translateX(100px); opacity: 0; }
+    }
+
+    /* Form animations */
+.cyber-btn {
+  transition: all 0.3s ease;
+}
+
+.cyber-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+}
+
+/* File upload styling */
+[for="secure-drop"] {
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Loading spinner */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .cyber-border::before {
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Matrix Background -->
+  <canvas id="matrix" class="matrix-bg"></canvas>
+  
+  <!-- Particles -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-gray-800">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <div class="text-2xl font-bold hacker-text">AGENT DEV</div>
+      <div class="hidden md:flex space-x-8">
+        <a href="#home" class="hover:text-cyan-400 transition">HOME</a>
+        <a href="#about" class="hover:text-cyan-400 transition">ABOUT</a>
+        <a href="#skills" class="hover:text-cyan-400 transition">SKILLS</a>
+        <a href="#projects" class="hover:text-cyan-400 transition">PROJECTS</a>
+        <a href="#contact" class="hover:text-cyan-400 transition">CONTACT</a>
+      </div>
+      <button class="md:hidden text-2xl" id="menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden bg-black bg-opacity-95 w-full py-4" id="mobile-menu">
+      <div class="container mx-auto px-6 flex flex-col space-y-4">
+        <a href="#home" class="hover:text-cyan-400 transition">HOME</a>
+        <a href="#about" class="hover:text-cyan-400 transition">ABOUT</a>
+        <a href="#skills" class="hover:text-cyan-400 transition">SKILLS</a>
+        <a href="#projects" class="hover:text-cyan-400 transition">PROJECTS</a>
+        <a href="#contact" class="hover:text-cyan-400 transition">CONTACT</a>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black to-transparent opacity-80"></div>
+    </div>
+    
+    <div class="container mx-auto px-6 z-10 text-center">
+      <div class="glitch mb-4" data-text="AGENT_DEV">
+        <h1 class="text-5xl md:text-8xl font-bold tracking-widest">AGENT DEV</h1>
+      </div>
+      <p class="text-xl md:text-2xl mb-8 hacker-text">FULL-STACK DEVELOPER</p>
+      
+      <div class="terminal max-w-3xl mx-auto mb-8">
+        <div class="terminal-header">
+          <div class="terminal-btn bg-red-500"></div>
+          <div class="terminal-btn bg-yellow-500"></div>
+          <div class="terminal-btn bg-green-500"></div>
+          <span class="text-xs ml-2">terminal</span>
+        </div>
+        <div class="terminal-body" id="terminal-output">
+          <p><span class="command">$</span> <span class="typing" id="typing-text"></span></p>
+        </div>
+      </div>
+      
+      <div class="flex justify-center space-x-4">
+        <a href="#projects" class="cyber-btn px-8 py-3 rounded-md">VIEW WORK</a>
+        <a href="#contact" class="cyber-border px-8 py-3 rounded-md hover:bg-cyan-900 transition">CONTACT</a>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-10 left-0 right-0 text-center animate-bounce">
+      <a href="#about" class="text-3xl"><i class="fas fa-chevron-down"></i></a>
+    </div>
+  </section>
+  
+  <!-- About Section -->
+  <section id="about" class="py-20 px-6 md:px-20 bg-black bg-opacity-80 backdrop-blur-sm">
+    <div class="container mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center hacker-text" data-aos="fade-up">ABOUT_ME</h2>
+      
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="relative" data-aos="fade-right">
+          <div class="cyber-border rounded-lg overflow-hidden">
+            <img src="Dev.jpg" alt="Agent Dev" class="w-auto h-auto">
+          </div>
+          <div class="absolute -bottom-5 -right-5 bg-gray-900 p-4 rounded-lg shadow-lg border border-cyan-400">
+            <div class="text-center">
+              <p class="text-cyan-400 font-bold">3+</p>
+              <p class="text-sm">Years Experience</p>
+            </div>
+          </div>
+        </div>
+        
+        <div data-aos="fade-left">
+          <h3 class="text-2xl md:text-3xl font-bold mb-6">CYBER SECURITY SPECIALIST & FULL-STACK DEVELOPER</h3>
+          <p class="text-gray-300 mb-6 leading-relaxed">
+           I’m Agent Dev — a Full Stack Developer dedicated to building fast, secure, and scalable web applications. From sleek front-end interfaces to robust back-end systems, I handle the entire development cycle with precision and purpose. My toolkit includes HTML, CSS, JavaScript, Node.js, Express, MongoDB, and more — allowing me to turn ideas into fully functional digital products.
+
+Currently pursuing my B.Tech in Computer Science at VIT Bhopal, I combine technical expertise with a problem-solving mindset to deliver clean code and impactful solutions. Whether it's optimizing performance, strengthening security, or designing intuitive UI, I approach every project like a mission: with focus, innovation, and execution.
+          </p>
+          <p class="text-gray-300 mb-6 leading-relaxed">
+            My expertise spans from frontend aesthetics to backend robustness, with a particular focus on creating secure, scalable systems that withstand even the most determined adversaries.
+          </p>
+          
+          <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="flex items-center">
+              <div class="mr-3 text-cyan-400"><i class="fas fa-check-circle"></i></div>
+              <span>Full-Stack Development</span>
+            </div>
+            <div class="flex items-center">
+              <div class="mr-3 text-cyan-400"><i class="fas fa-check-circle"></i></div>
+              <span>Blockchain</span>
+            </div>
+            <div class="flex items-center">
+              <div class="mr-3 text-cyan-400"><i class="fas fa-check-circle"></i></div>
+              <span>AI Integration</span>
+            </div>
+          </div>
+          
+          <a href="#" class="cyber-btn px-6 py-2 rounded-md inline-block">DOWNLOAD DOSSIER</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+<!-- Skills Section -->
+<section id="skills" class="py-20 px-6 md:px-20 bg-gradient-to-b from-black to-gray-900">
+    <div class="container mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center hacker-text" data-aos="fade-up">TECHNICAL_SKILLS</h2>
+        
+        <div class="grid md:grid-cols-2 gap-12">
+            <!-- Coding Skills -->
+            <div data-aos="fade-right">
+                <h3 class="text-2xl font-bold mb-6">CODING SKILLS</h3>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>JavaScript/TypeScript</span>
+                            <span>98%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 98%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>React/Next.js</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Node.js/Express</span>
+                            <span>97%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 97%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Python</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Solidity</span>
+                            <span>65%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 65%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Security Skills -->
+            <div data-aos="fade-left">
+                <h3 class="text-2xl font-bold mb-6">SECURITY SKILLS</h3>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Cryptography</span>
+                            <span>93%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 93%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Network Security</span>
+                            <span>74%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 74%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Security Audits</span>
+                            <span>97%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 97%"></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+      
+      <div class="mt-16" data-aos="fade-up">
+        <h3 class="text-2xl font-bold mb-6 text-center">TECHNOLOGIES & TOOLS</h3>
+        
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6">
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="w-12 h-12 mb-2" alt="React">
+            <span class="text-xs">React</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" class="w-12 h-12 mb-2" alt="Next.js">
+            <span class="text-xs">Next.js</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" class="w-12 h-12 mb-2" alt="Node.js">
+            <span class="text-xs">Node.js</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" class="w-12 h-12 mb-2" alt="TypeScript">
+            <span class="text-xs">TypeScript</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-12 h-12 mb-2" alt="Python">
+            <span class="text-xs">Python</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/solidity/solidity-original.svg" class="w-12 h-12 mb-2" alt="Solidity">
+            <span class="text-xs">Solidity</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" class="w-12 h-12 mb-2" alt="MongoDB">
+            <span class="text-xs">MongoDB</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" class="w-12 h-12 mb-2" alt="PostgreSQL">
+            <span class="text-xs">PostgreSQL</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" class="w-12 h-12 mb-2" alt="Docker">
+            <span class="text-xs">Docker</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" class="w-12 h-12 mb-2" alt="Kubernetes">
+            <span class="text-xs">Kubernetes</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" class="w-12 h-12 mb-2" alt="Terraform">
+            <span class="text-xs">Terraform</span>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center hover:bg-gray-700 transition">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg" class="w-12 h-12 mb-2" alt="Ansible">
+            <span class="text-xs">Ansible</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Projects Section -->
+  <section id="projects" class="py-20 px-6 md:px-20 bg-black bg-opacity-80 backdrop-blur-sm">
+    <div class="container mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center hacker-text" data-aos="fade-up">CLASSIFIED_PROJECTS</h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Project 1 -->
+        <div class="cyber-border rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+          <div class="relative">
+            <img src="Screenshot 2025-04-04 232813.png" alt="Project 1" class="w-full h-64 object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+            <div class="absolute bottom-0 left-0 p-6">
+              <h3 class="text-2xl font-bold mb-2">SecureNet</h3>
+              <p class="text-gray-300">Enterprise-grade security platform</p>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-300 mb-4">A comprehensive cyber security platform with real-time threat detection, automated response systems, and AI-powered anomaly detection.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">React</span>
+              <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">Node.js</span>
+              <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">MongoDB</span>
+              <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">TensorFlow</span>
+            </div>
+            <div class="flex space-x-3">
+              <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Project: ShikshaSetu -->
+<div class="cyber-border rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+  <div class="relative">
+    <img src="Screenshot 2025-04-04 232854.png" alt="ShikshaSetu" class="w-full h-64 object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+    <div class="absolute bottom-0 left-0 p-6">
+      <h3 class="text-2xl font-bold mb-2">ShikshaSetu</h3>
+      <p class="text-gray-300">E-Learning System</p>
+    </div>
+  </div>
+  <div class="p-6">
+    <p class="text-gray-300 mb-4">A full-featured platform connecting students, faculty, and admins through role-based portals, course tools, and interactive dashboards.</p>
+    <div class="flex flex-wrap gap-2 mb-4">
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">Node.js</span>
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">Express</span>
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">MongoDB</span>
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">Tailwind CSS</span>
+    </div>
+    <div class="flex space-x-3">
+      <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+      <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fab fa-github"></i> Code</a>
+    </div>
+  </div>
+</div>
+
+<!-- Project: MindSync -->
+<div class="cyber-border rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+  <div class="relative">
+    <img src="Screenshot 2025-03-03 230937.png" alt="MindSync" class="w-full h-64 object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+    <div class="absolute bottom-0 left-0 p-6">
+      <h3 class="text-2xl font-bold mb-2">MindSync</h3>
+      <p class="text-gray-300">Health & Wellness Tracker</p>
+    </div>
+  </div>
+  <div class="p-6">
+    <p class="text-gray-300 mb-4">A smart app designed to track mood, habits, and mental wellness. Future updates include AI-based sentiment analysis and insights.</p>
+    <div class="flex flex-wrap gap-2 mb-4">
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">JavaScript</span>
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">Node.js</span>
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">MongoDB</span>
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">CSS</span>
+    </div>
+    <div class="flex space-x-3">
+      <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+      <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fab fa-github"></i> Code</a>
+    </div>
+  </div>
+</div>
+
+<!-- Project: Skill Swap Platform -->
+<div class="cyber-border rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+  <div class="relative">
+    <img src="Screenshot 2025-03-26 011421.png" alt="Skill Swap Platform" class="w-full h-64 object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+    <div class="absolute bottom-0 left-0 p-6">
+      <h3 class="text-2xl font-bold mb-2">Skill Swap Platform</h3>
+      <p class="text-gray-300">Collaborative Learning Portal</p>
+    </div>
+  </div>
+  <div class="p-6">
+    <p class="text-gray-300 mb-4">A platform where users can offer and request skills, enabling peer-to-peer learning and community-driven growth.</p>
+    <div class="flex flex-wrap gap-2 mb-4">
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">HTML</span>
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">CSS</span>
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">JavaScript</span>
+      <span class="text-xs bg-gray-800 px-3 py-1 rounded-full">Node.js</span>
+    </div>
+    <div class="flex space-x-3">
+      <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+      <a href="#" class="text-cyan-400 hover:text-cyan-300"><i class="fab fa-github"></i> Code</a>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Mission Status Section -->
+<section class="py-20 px-6 md:px-20 bg-black bg-opacity-90">
+  <div class="container mx-auto">
+    <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center hacker-text text-cyan-400 tracking-widest" data-aos="fade-up">
+      MISSION_STATUS
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- ACTIVE PROJECTS -->
+      <div class="cyber-border p-6 rounded-2xl shadow-lg bg-gray-900/70 backdrop-blur" data-aos="fade-up" data-aos-delay="200">
+        <div class="text-5xl text-cyan-400 mb-4">
+          <i class="fas fa-code"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-200 mb-2 tracking-wider">ACTIVE PROJECTS</h3>
+        <div class="text-3xl font-bold hacker-text text-cyan-300" id="active-projects">5</div>
+        <div class="mt-4 h-2 bg-gray-800 rounded-full">
+          <div class="h-full bg-cyan-400 rounded-full transition-all duration-700" style="width: 50%"></div>
+        </div>
+      </div>
+
+      <!-- THREATS NEUTRALIZED -->
+      <div class="cyber-border p-6 rounded-2xl shadow-lg bg-gray-900/70 backdrop-blur" data-aos="fade-up" data-aos-delay="300">
+        <div class="text-5xl text-pink-500 mb-4">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-200 mb-2 tracking-wider">THREATS NEUTRALIZED</h3>
+        <div class="text-3xl font-bold hacker-text text-pink-400" id="threats-neutralized">100%</div>
+        <div class="mt-4 h-2 bg-gray-800 rounded-full">
+          <div class="h-full bg-pink-500 rounded-full transition-all duration-700" style="width: 100%"></div>
+        </div>
+      </div>
+
+      <!-- SYSTEM UPTIME -->
+      <div class="cyber-border p-6 rounded-2xl shadow-lg bg-gray-900/70 backdrop-blur" data-aos="fade-up" data-aos-delay="400">
+        <div class="text-5xl text-green-400 mb-4">
+          <i class="fas fa-clock"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-200 mb-2 tracking-wider">SYSTEM UPTIME</h3>
+        <div class="text-3xl font-bold hacker-text text-green-400" id="system-uptime">99:99:99:99</div>
+        <div class="mt-4 h-2 bg-gray-800 rounded-full">
+          <div class="h-full bg-green-400 rounded-full transition-all duration-700" style="width: 99%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Blockchain Verification -->
+  <section class="py-20 px-6 md:px-20 bg-gradient-to-r from-gray-900 to-black">
+    <div class="container mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center hacker-text" data-aos="fade-up">BLOCKCHAIN_VERIFICATION</h2>
+      
+      <div class="cyber-border rounded-lg p-8" data-aos="zoom-in">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-4">DIGITAL CREDENTIALS ON-CHAIN</h3>
+            <p class="text-gray-300 mb-6">
+              All my professional credentials and certifications are stored immutably on the Ethereum blockchain. 
+              Verify my qualifications directly through smart contracts.
+            </p>
+            <div class="flex flex-wrap gap-3 mb-6">
+              <div class="bg-gray-800 px-4 py-2 rounded-full flex items-center">
+                <i class="fab fa-ethereum text-purple-400 mr-2"></i>
+                <span>Ethereum Mainnet</span>
+              </div>
+              <div class="bg-gray-800 px-4 py-2 rounded-full flex items-center">
+                <i class="fas fa-link text-blue-400 mr-2"></i>
+                <span>Polygon</span>
+              </div>
+              <div class="bg-gray-800 px-4 py-2 rounded-full flex items-center">
+                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                <span>Verified</span>
+              </div>
+            </div>
+            <button class="cyber-btn px-6 py-3 rounded-md" id="verify-btn">
+              VERIFY CREDENTIALS
+            </button>
+          </div>
+          
+          <div class="relative">
+            <div class="terminal">
+              <div class="terminal-header">
+                <div class="terminal-btn bg-red-500"></div>
+                <div class="terminal-btn bg-yellow-500"></div>
+                <div class="terminal-btn bg-green-500"></div>
+                <span class="text-xs ml-2">blockchain_verification</span>
+              </div>
+              <div class="terminal-body" id="verification-terminal">
+                <p><span class="command">$</span> verify credentials --agent dev</p>
+                <p>> Connecting to Ethereum network...</p>
+                <p>> Fetching smart contract 0x1a2b...3c4d</p>
+                <p>> Verifying cryptographic signatures...</p>
+                <p class="text-green-400">> Verification complete. Credentials authenticated.</p>
+                <p>> <span class="typing" id="verification-typing"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Assistant -->
+<div class="fixed bottom-6 left-6 z-50" id="ai-assistant">
+  <div class="relative">
+    <button class="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center text-2xl shadow-lg hover:scale-110 transition-transform" id="ai-toggle">
+      <i class="fas fa-robot"></i>
+    </button>
+    <span class="absolute top-0 right-0 w-4 h-4 bg-green-400 rounded-full animate-pulse"></span>
+    
+    <div class="absolute bottom-20 left-0 w-80 bg-gray-900 rounded-lg shadow-xl border border-cyan-400 hidden" id="ai-chat">
+      <div class="terminal-header flex justify-between items-center">
+        <div class="flex">
+          <div class="terminal-btn bg-red-500"></div>
+          <div class="terminal-btn bg-yellow-500"></div>
+          <div class="terminal-btn bg-green-500"></div>
+          <span class="text-xs ml-2">AI_Assistant</span>
+        </div>
+        <button class="text-xs text-gray-400 hover:text-white" id="ai-close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="terminal-body h-64 overflow-y-auto p-4" id="ai-messages">
+        <p class="text-green-400">> AI Assistant activated. Type 'help' for commands.</p>
+      </div>
+      <div class="p-3 border-t border-gray-700">
+        <div class="flex">
+          <input type="text" placeholder="Enter your query..." class="flex-grow bg-gray-800 text-sm px-3 py-2 rounded-l focus:outline-none" id="ai-input">
+          <button class="bg-cyan-600 hover:bg-cyan-700 px-3 py-2 rounded-r text-sm" id="ai-send">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Elements
+  const aiToggle = document.getElementById('ai-toggle');
+  const aiChat = document.getElementById('ai-chat');
+  const aiClose = document.getElementById('ai-close');
+  const aiInput = document.getElementById('ai-input');
+  const aiSend = document.getElementById('ai-send');
+  const aiMessages = document.getElementById('ai-messages');
+
+  // Toggle chat visibility
+  aiToggle.addEventListener('click', () => aiChat.classList.toggle('hidden'));
+  aiClose.addEventListener('click', () => aiChat.classList.add('hidden'));
+
+  // Command responses
+  const commands = {
+    help: () => addResponse("Available commands: help, projects, skills, contact, clear"),
+    projects: () => addResponse("1. SecureNet - Security Platform<br>2. ShikshaSetu - E-Learning System "),
+    skills: () => addResponse("JavaScript: 98%<br>React: 95%<br>Node.js: 97%"),
+    contact: () => addResponse("Email: devsarangdhar@gmail.com<br>Signal: +91 8788383420"),
+    clear: () => { aiMessages.innerHTML = '<p class="text-green-400">> Chat cleared.</p>'; }
+  };
+
+  // Add message to chat
+  function addMessage(text, isUser = false) {
+    const msg = document.createElement('p');
+    msg.className = isUser ? 'text-cyan-400' : 'text-green-400';
+    msg.innerHTML = `> ${text}`;
+    aiMessages.appendChild(msg);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  // Add AI response
+  function addResponse(text) {
+    setTimeout(() => addMessage(text), 500);
+  }
+
+  // Process input
+  function processInput() {
+    const text = aiInput.value.trim();
+    if (text) {
+      addMessage(text, true);
+      aiInput.value = '';
+      
+      const cmd = text.toLowerCase().split(' ')[0];
+      if (commands[cmd]) {
+        commands[cmd]();
+      } else {
+        addResponse("Command not recognized. Type 'help' for options.");
+      }
+    }
+  }
+
+  // Event listeners
+  aiSend.addEventListener('click', processInput);
+  aiInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') processInput();
+  });
+});
+</script>
+  <!-- Additional Scripts -->
+  <script>
+    // Mission Status Counters
+    function animateCounter(elementId, target, duration = 2000) {
+      const element = document.getElementById(elementId);
+      const start = 0;
+      const increment = target / (duration / 16);
+      let current = start;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          clearInterval(timer);
+          current = target;
+        }
+        element.textContent = Math.floor(current).toLocaleString();
+      }, 16);
+    }
+    
+    // Animate progress bars
+    function animateProgressBar(barId, width) {
+      const bar = document.getElementById(barId);
+      let currentWidth = 0;
+      const interval = setInterval(() => {
+        if (currentWidth >= width) {
+          clearInterval(interval);
+        } else {
+          currentWidth++;
+          bar.style.width = currentWidth + '%';
+        }
+      }, 20);
+    }
+    
+    // Start counters when section is in view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter('active-projects', 27);
+          animateCounter('threats-neutralized', 143);
+          animateProgressBar('projects-bar', 85);
+          animateProgressBar('threats-bar', 92);
+          animateProgressBar('uptime-bar', 99);
+          
+          // Start uptime counter
+          let days = 0, hours = 0, minutes = 0, seconds = 0;
+          setInterval(() => {
+            seconds++;
+            if (seconds >= 60) {
+              seconds = 0;
+              minutes++;
+            }
+            if (minutes >= 60) {
+              minutes = 0;
+              hours++;
+            }
+            if (hours >= 24) {
+              hours = 0;
+              days++;
+            }
+            document.getElementById('system-uptime').textContent = 
+              `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          }, 1000);
+          
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    
+    observer.observe(document.querySelector('.mission-status'));
+    
+    // Blockchain Verification
+    const verifyBtn = document.getElementById('verify-btn');
+    const verificationTyping = new Typed('#verification-typing', {
+      strings: ["Preparing zero-knowledge proof...", "Validating on-chain records...", "Checking credential hashes..."],
+      typeSpeed: 20,
+      backSpeed: 10,
+      loop: true,
+      showCursor: true,
+      cursorChar: '_'
+    });
+    
+    verifyBtn.addEventListener('click', () => {
+      document.getElementById('terminal-sound').play();
+      verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> VERIFYING';
+      setTimeout(() => {
+        verifyBtn.innerHTML = '<i class="fas fa-check"></i> VERIFIED';
+        // Show verification success animation
+        const terminal = document.getElementById('verification-terminal');
+        terminal.innerHTML += '<p class="text-green-400">> All credentials verified successfully.</p>';
+        terminal.innerHTML += '<p>> <span class="text-cyan-400">✔ Digital Diploma (MIT)</span></p>';
+        terminal.innerHTML += '<p>> <span class="text-cyan-400">✔ CISSP Certification</span></p>';
+        terminal.innerHTML += '<p>> <span class="text-cyan-400">✔ AWS Security Specialty</span></p>';
+        terminal.scrollTop = terminal.scrollHeight;
+        
+        setTimeout(() => {
+          verifyBtn.textContent = 'VERIFY CREDENTIALS';
+        }, 3000);
+      }, 2000);
+    });
+  
+    
+    // Easter egg - Konami code
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === konamiCode[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+          // Activate easter egg
+          document.body.style.background = 'linear-gradient(135deg, #ff00cc, #3333ff)';
+          document.querySelectorAll('h1, h2, h3').forEach(el => {
+            el.style.animation = 'glitch 1s linear infinite';
+          });
+          setTimeout(() => {
+            alert('Easter egg activated! Maximum power engaged!');
+          }, 500);
+          konamiIndex = 0;
+        }
+      } else {
+        konamiIndex = 0;
+      }
+    });
+
+    
+  </script>
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 px-6 md:px-20 bg-gradient-to-b from-gray-900 to-black">
+    <div class="container mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center hacker-text" data-aos="fade-up">SECURE_CONTACT</h2>
+      
+      <div class="grid md:grid-cols-2 gap-12">
+        <div data-aos="fade-right">
+          <h3 class="text-2xl font-bold mb-6">ENCRYPTED MESSAGE</h3>
+          
+          <form id="contact-form" class="space-y-6">
+  <input type="hidden" name="form-name" value="contact">
+  <p class="hidden">
+    <label>Don't fill this out: <input name="bot-field" /></label>
+  </p>
+
+  <div>
+    <label for="name" class="block mb-2">Your Codename</label>
+    <input type="text" id="name" name="name" required
+      class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400 transition">
+  </div>
+
+  <div>
+    <label for="email" class="block mb-2">Secure Channel</label>
+    <input type="email" id="email" name="email" required
+      class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400 transition">
+  </div>
+
+  <div>
+    <label for="priority" class="block mb-2">Priority Level</label>
+    <select id="priority" name="priority"
+      class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400 transition">
+      <option>Low Priority</option>
+      <option>Medium Priority</option>
+      <option>High Priority</option>
+      <option>Critical</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="message" class="block mb-2">Encrypted Message</label>
+    <textarea id="message" name="message" rows="5" required
+      class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-400 transition"></textarea>
+  </div>
+
+  <div class="flex items-center">
+    <input type="checkbox" id="secure" name="secure" class="mr-3">
+    <label for="secure">Enable PGP Encryption</label>
+  </div>
+
+  <button type="submit" class="cyber-btn px-8 py-3 rounded-md w-full">
+    SEND SECURE MESSAGE
+  </button>
+</form>
+   <!-- Inline JavaScript -->
+        <script>
+          document.getElementById("contact-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const subject = document.getElementById("subject").value;
+            const message = document.getElementById("message").value.trim();
+
+            const data = { name, email, subject, message };
+
+            try {
+              const res = await fetch("/api/submit-form", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+              });
+
+              const result = await res.json();
+
+              if (res.ok) {
+                alert(`✅ ${result.message} | ID: ${result.id}`);
+                e.target.reset();
+              } else {
+                alert(`❌ ${result.message || "Something went wrong."}`);
+              }
+            } catch (err) {
+              alert("❌ Network error: " + err.message);
+            }
+          });
+        </script>
+
+    </div>
+    
+    <div data-aos="fade-left">
+      <h3 class="text-2xl font-bold mb-6">DIRECT CHANNELS</h3>
+      
+      <div class="space-y-6">
+        <div class="flex items-start">
+          <div class="text-cyan-400 text-2xl mr-4"><i class="fas fa-envelope"></i></div>
+          <div>
+            <h4 class="font-bold">Encrypted Email</h4>
+            <p class="text-gray-300">devsarangdhar@gmail.com</p>
+            <p class="text-xs text-gray-500 mt-1">PGP Key: 0x1A2B3C4D5E6F7890</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <div class="text-cyan-400 text-2xl mr-4"><i class="fas fa-phone-alt"></i></div>
+          <div>
+            <h4 class="font-bold">Secure Line</h4>
+            <p class="text-gray-300">+91 87883 83420</p>
+            <p class="text-xs text-gray-500 mt-1">Signal/Telegram preferred</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <div class="text-cyan-400 text-2xl mr-4"><i class="fab fa-github"></i></div>
+          <div>
+            <h4 class="font-bold">GitHub</h4>
+            <p class="text-gray-300">https://github.com/dev-sarangdhar</p>
+            <p class="text-xs text-gray-500 mt-1">Open-source contributions</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <div class="text-cyan-400 text-2xl mr-4"><i class="fab fa-linkedin"></i></div>
+          <div>
+            <h4 class="font-bold">LinkedIn</h4>
+            <p class="text-gray-300">https://www.linkedin.com/in/dev-sarangdhar-470066307/</p>
+            <p class="text-xs text-gray-500 mt-1">Professional network</p>
+          </div>
+        </div>
+        
+        <div class="pt-6">
+          <h4 class="font-bold mb-3">SECURE DROP</h4>
+          <div class="bg-gray-800 p-4 rounded-lg border border-dashed border-gray-600">
+            <p class="text-sm text-gray-400 mb-3">For highly sensitive information, use our secure drop service:</p>
+            <div class="flex items-center">
+              <input type="file" id="secure-drop" class="hidden">
+              <label for="secure-drop" class="cyber-border px-4 py-2 rounded-md cursor-pointer hover:bg-gray-700 transition">SELECT FILE</label>
+              <span class="ml-3 text-sm text-gray-400">Max 10MB</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-3">Files are encrypted end-to-end with AES-256</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+  
+<!-- Footer --> 
+ <footer class="bg-black py-12 px-6 border-t border-gray-800"> 
+    <div class="container mx-auto"> 
+        <div class="grid md:grid-cols-4 gap-8 mb-8"> 
+            <div> 
+                <h3 class="text-xl font-bold mb-4 hacker-text">AGENT_DEV</h3> 
+                <p class="text-gray-400">Full-stack developer and cyber security specialist delivering secure digital solutions.</p> 
+            </div>
+                <div>
+      <h4 class="font-bold mb-4">QUICK LINKS</h4>
+      <ul class="space-y-2">
+        <li><a href="#home" class="text-gray-400 hover:text-cyan-400 transition">Home</a></li>
+        <li><a href="#about" class="text-gray-400 hover:text-cyan-400 transition">About</a></li>
+        <li><a href="#skills" class="text-gray-400 hover:text-cyan-400 transition">Skills</a></li>
+        <li><a href="#projects" class="text-gray-400 hover:text-cyan-400 transition">Projects</a></li>
+        <li><a href="#contact" class="text-gray-400 hover:text-cyan-400 transition">Contact</a></li>
+      </ul>
+    </div>
+    
+    <div>
+      <h4 class="font-bold mb-4">SERVICES</h4>
+      <ul class="space-y-2">
+        <li class="text-gray-400">Web Development</li>
+        <li class="text-gray-400">Security Audits</li>
+        <li class="text-gray-400">Penetration Testing</li>
+        <li class="text-gray-400">Blockchain Security</li>
+        <li class="text-gray-400">Incident Response</li>
+      </ul>
+    </div>
+    
+    <div>
+      <h4 class="font-bold mb-4">DIGITAL PRESENCE</h4>
+      <div class="flex space-x-4">
+        <a href="#" class="text-2xl text-gray-400 hover:text-cyan-400 transition"><i class="fab fa-github"></i></a>
+        <a href="#" class="text-2xl text-gray-400 hover:text-cyan-400 transition"><i class="fab fa-linkedin"></i></a>
+        <a href="#" class="text-2xl text-gray-400 hover:text-cyan-400 transition"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="text-2xl text-gray-400 hover:text-cyan-400 transition"><i class="fab fa-discord"></i></a>
+        <a href="#" class="text-2xl text-gray-400 hover:text-cyan-400 transition"><i class="fab fa-telegram"></i></a>
+      </div>
+      
+      <div class="mt-6">
+        <h4 class="font-bold mb-2">NEWSLETTER</h4>
+        <div class="flex">
+          <input type="email" placeholder="Your secure email" class="bg-gray-800 px-4 py-2 rounded-l-lg focus:outline-none w-full">
+          <button class="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-r-lg transition"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+    <p class="text-gray-400 mb-4 md:mb-0">&copy; 2025 Agent Dev. All systems secure.</p>
+    
+    <div class="flex space-x-6">
+      <a href="#" class="text-gray-400 hover:text-cyan-400 transition">Privacy Policy</a>
+      <a href="#" class="text-gray-400 hover:text-cyan-400 transition">Terms of Service</a>
+      <a href="#" class="text-gray-400 hover:text-cyan-400 transition">Security</a>
+    </div>
+  </div>
+</div>
+</footer> 
+<!-- Back to Top --> 
+ <a href="#home" class="fixed bottom-6 right-6 bg-gray-900 w-12 h-12 rounded-full flex items-center justify-center text-xl border border-gray-700 hover:bg-cyan-900 hover:border-cyan-400 transition" id="back-to-top"> 
+    <i class="fas fa-arrow-up"></i> 
+</a> 
+<!-- Scripts --> 
+ <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+// Initialize AOS animations
+AOS.init({ duration: 800, once: true });
+
+// Matrix Background Effect
+function initMatrix() {
+  const canvas = document.getElementById('matrix');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+  const drops = Array(Math.floor(columns)).fill(1);
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#0f0';
+    ctx.font = `${fontSize}px monospace`;
+    
+    drops.forEach((y, i) => {
+      const text = chars.charAt(Math.floor(Math.random() * chars.length));
+      ctx.fillText(text, i * fontSize, y * fontSize);
+      if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    });
+  }
+
+  setInterval(draw, 30);
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+}
+
+// Initialize particles
+function initParticles() {
+  const container = document.getElementById('particles');
+  if (!container) return;
+  
+  for (let i = 0; i < 50; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.cssText = `
+      left: ${Math.random() * 100}vw;
+      top: ${Math.random() * 100}vh;
+      width: ${Math.random() * 3 + 1}px;
+      height: ${Math.random() * 3 + 1}px;
+      animation-duration: ${Math.random() * 10 + 5}s;
+      animation-delay: ${Math.random() * 5}s;
+    `;
+    container.appendChild(particle);
+  }
+}
+
+// Terminal typing effect
+function initTerminal() {
+  const typed = new Typed('#typing-text', {
+    strings: [
+      "Initializing secure connection...",
+      "Establishing encrypted channel...",
+      "Authenticating user credentials...",
+      "Connection secured. Welcome back, Agent.",
+      `Last login: ${new Date().toLocaleString()}`,
+      "System ready. Awaiting commands..."
+    ],
+    typeSpeed: 30,
+    backSpeed: 10,
+    loop: true,
+    showCursor: true,
+    cursorChar: '_'
+  });
+}
+
+// Mobile menu toggle
+function initMobileMenu() {
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+  }
+}
+
+// Back to top button
+function initBackToTop() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('show', window.scrollY > 300);
+  });
+  
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// Contact form submission
+function initContactForm() {
+  const form = document.querySelector('#contact form');
+  if (!form) return;
+  
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Encrypting...';
+    
+    setTimeout(() => {
+      submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent';
+      
+      // Show confirmation
+      const confirmation = document.createElement('div');
+      confirmation.className = 'mt-4 p-4 bg-gray-800 rounded border border-green-400 text-green-400';
+      confirmation.innerHTML = `
+        <p>> Secure transmission complete</p>
+        <p>> Message ID: ${Math.random().toString(36).substring(2, 10).toUpperCase()}</p>
+      `;
+      form.appendChild(confirmation);
+      
+      setTimeout(() => {
+        form.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        confirmation.remove();
+      }, 3000);
+    }, 1500);
+  });
+}
+
+// File upload handler
+function initFileUpload() {
+  const fileInput = document.getElementById('secure-drop');
+  if (!fileInput) return;
+  
+  fileInput.addEventListener('change', function() {
+    const label = this.nextElementSibling;
+    if (this.files.length > 0) {
+      label.innerHTML = `<i class="fas fa-file-shield mr-2"></i>${this.files[0].name}`;
+    }
+  });
+}
+
+// Initialize everything when DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+  initMatrix();
+  initParticles();
+  initTerminal();
+  initMobileMenu();
+  initBackToTop();
+  initContactForm();
+  initFileUpload();
+});
+</script>
+</head>
+</body> 
+</html>
